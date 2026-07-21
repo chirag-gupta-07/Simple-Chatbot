@@ -12,21 +12,14 @@ import uvicorn
 
 app = FastAPI()
 
-model = ChatMistralAI(
-    model = "mistral-small-latest",
-)
-
-mode = "Simple"
-choice = input()
-if(choice=="0"):
-    mode = "Angry"
-elif(choice=="1"):
-    mode = "Funny"
-elif(choice=="2"):
-    mode = "Sad"
+try:
+    model = ChatMistralAI(model="mistral-small-latest")
+except Exception as e:
+    print(f"Warning: Could not initialize ChatMistralAI. Did you set MISTRAL_API_KEY? Error: {e}")
+    model = None
 
 messages = [
-    SystemMessage(f"You act as a {mode} AI ChatBot")
+    SystemMessage("You act as a Funny AI ChatBot")
 ]
 
 class ChatRequest(BaseModel):
